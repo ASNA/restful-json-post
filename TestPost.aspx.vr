@@ -1,0 +1,43 @@
+﻿Using System
+Using System.Data
+Using System.Configuration
+Using System.Collections
+Using System.Web
+Using System.Web.Security
+Using System.Web.UI
+Using System.Web.UI.WebControls
+Using System.Web.UI.WebControls.WebParts
+Using System.Web.UI.HtmlControls
+
+BegClass TestPost Partial(*Yes) Access(*Public) Extends(System.Web.UI.Page)
+
+    BegSr Page_Load Access(*Private) Event(*This.Load)
+        DclSrParm sender Type(*Object)
+        DclSrParm e Type(System.EventArgs)
+        
+        // None of this code matters to you. I'm just emulator what the 
+        // DejaVoo Web service is going to do. 
+        
+        DclFld paymentType    Type( *String )
+        DclFld transType      Type( *String )  
+        DclFld amount         Type( *String ) 
+        DclFld dataReceived   Type( *String )        
+        DclFld responseString Type( *String ) 
+        
+        paymentType = Request[ "PaymentType" ]
+        transType = Request[ "TransType" ] 
+        amount = Request[ "amount" ] 
+        
+        Response.Clear()     
+        Response.BufferOutput = *True 
+        
+        dataReceived = String.Format( "[Data received: PaymentType='{0}' TransType='{1}' Amount='{2}']", paymentType, transType, amount )  
+        
+        responseString = "Refld=2&RegisterId=3&InvNum=1&ResultCode=0&RespMSG=Approved&DataReceived=" + dataReceived          
+
+        Response.Write( responseString ) 
+        
+        Response.End() 
+    EndSr
+
+EndClass
