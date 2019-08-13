@@ -1,0 +1,42 @@
+﻿Using System
+Using System.Collections.Generic
+Using ASNA.JsonRestRouting
+
+/// <summary>
+/// Summary description for WorkOrdersController
+/// </summary>
+BegClass CustomersController Access(*Public) Extends(ASNA.JsonRestRouting.Controller)
+
+    BegFunc Add Access(*Public) Type(ResponseInfo) 
+        DclFld ri Type(ResponseInfo) New()
+        DclFld Customer Type(CustomerEntity) 
+        DclFld headerValueX Type(*String) 
+        DclFld headerValueY Type(*String) 
+        DclFld Json Type(*String) 
+        
+        // Fetch request data this way if you'd like to get a queryable response. 
+        // DclFld CustomerName Type(*String) 
+        // DclFld JsonRequest Type(NewtonSoft.Json.Linq.JObject)
+        // JsonRequest = *Base.GetJsonRequestContent()		
+        // CustomerName = JsonRequest['CMName'].ToString()       
+
+        // Fetch it this way to hydrate an object. The schema of the incoming data must exactly, including case, 
+        // of the target object. 
+        Json = *Base.GetRequestContent()
+        Customer = NewtonSoft.Json.JsonConvert.DeserializeObject(Json, *TypeOf(CustomerEntity)) *As CustomerEntity
+        
+
+        headerValueX = *This.Http.Request.Headers['x-custom-header'].ToString()
+        headerValueY = *This.Http.Request.Headers['y-custom-header'].ToString()
+
+
+
+        ri.InfoMessage = 'Data correctly received'
+        // Use the GenericJsonResponse object for working with 
+        // generic Json. 
+
+        LeaveSr ri 
+
+    EndFunc 
+
+EndClass 
